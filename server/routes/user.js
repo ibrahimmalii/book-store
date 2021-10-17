@@ -4,25 +4,26 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const auth = require('../middlewares/auth')
 
+router.get('/me/books', auth, async(req, res)=>{
+    const {id} = req.user
+    try{
+        const user = await User.findById(id)
+        await user.populate('books')
+        res.send(user.books)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
 
 router.get('/me', auth, async (req, res)=>{
     res.send(req.user)
 })
 
+
 router.get('', async (req, res) => {
     try {
         const users = await User.find()
         res.status(200).send(users)
-    } catch (e) {
-        res.status(500).send(e)
-    }
-})
-
-router.get('/:id', async (req, res) => {
-    const { id } = req.params
-    try {
-        const user = await User.findById(id)
-        return !user ? res.status(404).send() : res.status(200).send(user)
     } catch (e) {
         res.status(500).send(e)
     }
@@ -40,7 +41,7 @@ router.post('', async (req, res) => {
     }
 })
 
-router.post('/login', auth, async (req, res)=>{
+router.post('/login', async (req, res)=>{
     try{
         const {email, password} = req.body
         const user = await User.findByCredentials(email, password)
@@ -51,8 +52,7 @@ router.post('/login', auth, async (req, res)=>{
     }
 })
 
-router.put('/update/:id', async (req, res) => {
-    const { id } = req.params
+router.put('/me', auth, async (req, res) => {
 
     // To check if value in valid values for updates
     const updates = Object.keys(req.body)
@@ -62,21 +62,20 @@ router.put('/update/:id', async (req, res) => {
         return res.status(400).send({ error: 'error value for updates' })
     }
 
+    const {user} = req
     try {
-        const user = await User.findById(id)
         updates.forEach(update => user[update] = req.body[update])
         await user.save()
-        return !user ? res.status(404).send('user not found') : res.status(200).send(user)
+        res.status(200).send(user)
     } catch (e) {
         res.status(400).send(e)
     }
 })
 
-router.delete('/:id', async (req, res) => {
-    const { id } = req.params
+router.delete('/me', auth, async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(id)
-        return !user ? req.status(404).send : req.status(200).send(user)
+        await req.user.remove()
+        res.send(req.user)
     } catch (e) {
         res.status(400).send(e)
     }

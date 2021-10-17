@@ -8,6 +8,7 @@ const port = process.env.port || 8080;
 
 //============================================== import routes =================================//
 const userRoute = require('./routes/user')
+const bookRoute = require('./routes/book')
 
 
 
@@ -17,8 +18,9 @@ const userRoute = require('./routes/user')
 app.use(express.json())
 app.use(bodyParser())
 app.use('/users', userRoute)
+app.use('/books', bookRoute)
 
 
 
-//=============================================== Connect To Server =======================================//
+//=============================================== Connect To Server ===========================//
 app.listen(port, ()=>console.log(chalk.bold.green('Server is up on Port', port)));

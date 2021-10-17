@@ -64,7 +64,26 @@ const userSchema = new Schema({
     }]
 })
 
+// To make a reference between user=>book (Note: this ref not stored in database)
+userSchema.virtual('books', {
+    ref: 'Book',
+    localField: '_id',
+    foreignField: 'owner'
+})
+
 // Middle ware will run before saving or updating user
+
+
+// Response some data and delete hide private data 
+userSchema.methods.toJSON = function ()  {
+    const user = this
+    const userObject = user.toObject()
+
+    delete userObject.password
+    delete userObject.tokens
+
+    return userObject
+}
 
 // 1- generate token ==> methods access instance
 userSchema.methods.generateAuthToken = async function () {
