@@ -2,7 +2,12 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
+const auth = require('../middlewares/auth')
 
+
+router.get('/me', auth, async (req, res)=>{
+    res.send(req.user)
+})
 
 router.get('', async (req, res) => {
     try {
@@ -23,6 +28,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+
 router.post('', async (req, res) => {
     const newUser = new User(req.body)
     try {
@@ -34,7 +40,7 @@ router.post('', async (req, res) => {
     }
 })
 
-router.post('/login', async (req, res)=>{
+router.post('/login', auth, async (req, res)=>{
     try{
         const {email, password} = req.body
         const user = await User.findByCredentials(email, password)
