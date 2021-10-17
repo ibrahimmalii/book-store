@@ -71,6 +71,13 @@ userSchema.virtual('books', {
     foreignField: 'owner'
 })
 
+// To make a reference between user=>comment
+userSchema.virtual('comments', {
+    ref: 'Comment',
+    localField: '_id',
+    foreignField: 'owener'
+})
+
 // Middle ware will run before saving or updating user
 
 
