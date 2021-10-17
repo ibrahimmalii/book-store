@@ -68,7 +68,7 @@ const userSchema = new Schema({
 userSchema.virtual('books', {
     ref: 'Book',
     localField: '_id',
-    foreignField: 'owner'
+    foreignField: 'owners'
 })
 
 // To make a reference between user=>comment
