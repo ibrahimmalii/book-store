@@ -48,9 +48,13 @@ const bookSchema = new Schema({
         type: Number,
         default: 0
     },
-    owners: [{
+    departments: [{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: 'Department'
+    }],
+    owners: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
     comments: [{
