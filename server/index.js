@@ -5,6 +5,7 @@ require('./db/mongoose');
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv')
+const cors = require('cors')
 
 dotenv.config()
 const port = process.env.port || 8080;
@@ -19,6 +20,7 @@ const bookRoute = require('./routes/book')
 
 
 // Middle wares
+app.use(cors())
 app.use(express.json())
 app.use(bodyParser())
 app.use('/api/auth', authRouter)

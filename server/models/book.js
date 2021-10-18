@@ -2,13 +2,13 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const bookSchema = new Schema({
-    // author: {
-    //     type: String,
-    //     required: true,
-    //     trim: true,
-    //     min: [5, 'minimum length is 5 characters'],
-    //     max: [50, 'maximum length is 50 characters']
-    // },
+    author: {
+        type: String,
+        required: true,
+        trim: true,
+        min: [5, 'minimum length is 5 characters'],
+        max: [50, 'maximum length is 50 characters']
+    },
     title: {
         type: String,
         required: true,
