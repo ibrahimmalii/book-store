@@ -2,16 +2,17 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const bookSchema = new Schema({
-    author: {
-        type: String,
-        required: true,
-        trim: true,
-        min: [5, 'minimum length is 5 characters'],
-        max: [50, 'maximum length is 50 characters']
-    },
+    // author: {
+    //     type: String,
+    //     required: true,
+    //     trim: true,
+    //     min: [5, 'minimum length is 5 characters'],
+    //     max: [50, 'maximum length is 50 characters']
+    // },
     title: {
         type: String,
         required: true,
+        unique: true,
         trim: true,
         lowercase: true
     },
@@ -49,22 +50,30 @@ const bookSchema = new Schema({
         default: 0
     },
     departments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Department'
+        department: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'Department'
+        }
     }],
     owners: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        owner: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
     }],
     comments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        trim: true,
-        lowercase: true,
-        min: [5, 'minimum length is 4 characters'],
-        max: [500, 'maximum length is 500 character'],
-        ref: 'Comment'
+        comment: {
+            type: mongoose.Schema.Types.ObjectId,
+            trim: true,
+            lowercase: true,
+            min: [5, 'minimum length is 4 characters'],
+            max: [500, 'maximum length is 500 character'],
+            ref: 'Comment'
+        }
     }]
+},{
+    timestamps: true
 })
 
 const Book = mongoose.model('Book', bookSchema)

@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
-const password = process.env.password || 'oE0DHMzPBXz06Hj7';
+const dotenv = require('dotenv');
+
+dotenv.config()
 
 
-
-mongoose.connect(`mongodb+srv://ITIMinia:${password}@cluster0.mz6gk.mongodb.net/book-store`,{
+mongoose.connect(process.env.mongo_url,{
     useNewUrlParser : true
 }).then(()=>{
     console.log(chalk.bold.green('Connected to database'));

@@ -6,24 +6,23 @@ const Book = require('../models/book')
 
 router.post('/', auth, async(req, res)=>{
     const {_id} = req.user
-    console.log(_id)
-    const book = new Book({...req.body, owner: _id})
+    const book = new Book({...req.body, 'owners.owner': _id})
     try{
         await book.save()
         
-        res.status(201).send(book)
+        res.status(201).json(book)
     } catch (e) {
-        res.status(500).send()
+        res.status(500).json()
     }
 })
 
 router.get('/me', auth, async(req, res)=>{
     const {_id} = req.user
     try{
-        const books = await Book.find({'owner': _id})
-        res.send(books)
+        const books = await Book.find({'owners.owner': _id})
+        res.json(books)
     } catch (e) {
-        res.status(500).send()
+        res.status(500).json()
     }
 })
 
@@ -31,35 +30,41 @@ router.get('/:id', auth, async(req, res)=>{
     const {id} = req.params
     try{
         const book =await Book.findById(id)
-        const owner = await book.populate('owner') //==> To GET user who is related with it 
+        await book.populate('comments')
         if(!book){
-            return res.status(400).send('No books found')
+            return res.status(400).json('No books found')
         }
-        res.send(book)
+        res.json(book)
     } catch (e) {
-        res.status(500).send()
+        res.status(500).json()
     }
 })
 
 
-
-router.put('/:id', auth, async(req, res)=>{
-    const {id} = req.params
-    try{
-        const newBook = await Book.findByIdAndUpdata(id, req.body)
-        await newBook.save()
-        // return !newBook ? res.status(400).send('no book like this') : res.send(newBook)
-    } catch (e) {
-        res.status(500).send()
-    }
-})
+// To Buy A New Book
+// router.put('/buy', auth, async(req, res)=>{
+//     const [booksID] = req.body
+//     const {ownerID} = req.user
+//     console.log(req.body)
+//     try{
+//         req.body.bookID.forEach(async(book)=>{
+//             const currentBook = await Book.findById(book)
+//             currentBook.owners = currentBook.owners.concat({ownerID})
+//             // console.log(currentBook)
+//             await currentBook.save()
+//         })
+//     } catch (e) {
+//         res.status(500).json()
+//     }
+// })
 
 router.get('', auth, async(req, res)=>{
     try{
         const books = await Book.find()
-        res.send(books)
+        // await books.populate('departments')
+        res.json(books)
     } catch (e) {
-        res.status(500).send()
+        res.status(500).json()
     }
 })
 

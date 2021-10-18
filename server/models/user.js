@@ -56,12 +56,24 @@ const userSchema = new Schema({
             }
         }
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    favourite: [{
+        book: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Book'
+        }
+    }],
     tokens: [{
         token: {
             type: String,
             required: true,
         }
     }]
+},{
+    timestamps: true
 })
 
 // To make a reference between user=>book (Note: this ref not stored in database)
@@ -117,7 +129,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
     return user
 }
-
 
 //3- hash password before saving
 userSchema.pre('save', async function (next) {
