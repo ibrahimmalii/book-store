@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from 'src/app/services/api.service';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -10,40 +10,66 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  form!: FormGroup;
-  islogged: boolean = false;
+  constructor(private formBuilder: FormBuilder, private router: Router, private userService : UserService) { }
 
-  constructor(
-    private _formBulider: FormBuilder,
-    private apiService: ApiService,
-    private _httpClient: HttpClient) { }
+  form: FormGroup = new FormGroup({});
+  isLogged: Boolean = false;
+  isLoginSuccess = false;
+  isLoginError = false;
+  code: string = '';
+  responseData: any;
+  logginData: any;
 
   ngOnInit(): void {
-    this.form = this._formBulider.group({
-      Email: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(20),
-          Validators.email,
-        ],
-      ],
-      // Password :['',[Validators.required,  Validators.minLength(8),Validators.maxLength(15) ,Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z\d$@$!%*?&].{8,}')]]
-      Password: ['', [Validators.required]],
-    }); 
+
+    this.userService.isLogged() && this.router.navigateByUrl('/');
+
+
+    // Validate Login Form
+    this.form = this.formBuilder.group({
+      email: ['', [Validators.email, Validators.maxLength(255), Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]]
+    });
+
   }
 
   login() {
-    this.islogged = true;
-    if(this.form.valid){
+    this.isLogged = true;
+
+    if (this.form.valid) {
       console.log(this.form.value);
-      this.apiService
-        .post('http://localhost:8080/api/auth/login', this.form.value)
-        .subscribe((res) => {
-          console.log(res);
-        });
+      this.userService.login(this.form.value).subscribe(res => {
+        console.log(res)
+        this.logginData = res;
+        if(this.logginData.token){
+          localStorage.token = this.logginData.token;
+          localStorage.user = JSON.stringify(this.logginData.user);
+          this.userService.setLoggedStatus(true);
+          this.router.navigateByUrl('/');
+          this.isLoginSuccess = true;
+          this.isLoginError = false;
+        }else{
+          this.isLoginError = true;
+          this.isLoginSuccess = false;
+        }
+
+      }, (error) => {
+        this.isLoginError = true;
+        this.isLoginSuccess = false;
+      })
+
+
+    } else {
+      this.isLoginError = true;
+      this.isLoginSuccess = false;
     }
+
   }
+
+  hide() {
+    this.isLoginSuccess = false;
+    this.isLoginError = false;
+  }
+
 
 }
