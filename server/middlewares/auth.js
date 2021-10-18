@@ -6,11 +6,10 @@ const User = require('../models/user')
 const auth = async (req, res, next) => {
     try{
         const {authorization} = req.headers
-        !authorization && res.send(301).json('Invalid token..')
         const token = authorization.replace('Bearer ', '')
+        // const token = authorization.split(' ')[1]
         const decode = jwt.verify(token, 'PASSWORD_KEY') 
-        const user = await User.findOne({'_id': decode._id, 'tokens.token': token})
-        if(!user) throw new Error()
+        const user = await User.findOne({_id: decode._id, 'tokens.token' : token})
 
         // Now we can send user in the req
         req.user = user
@@ -20,8 +19,11 @@ const auth = async (req, res, next) => {
     }
 }
 
-// const verifyTokenAndAuthorization = (req, res, next) => {
-//     (req.user.id == req.params.id || user.isAdmin) ? next() : res.statis.json('You are not allowed to do that..')
-// }
+const verifyTokenAndAuthorization = (req, res, next) => {
+    (req.user.id == req.params.id || user.isAdmin) ? next() : res.statis.json('You are not allowed to do that..')
+}
 
-module.exports = auth
+module.exports = {
+    auth, 
+    verifyTokenAndAuthorization
+}
