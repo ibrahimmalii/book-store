@@ -8,19 +8,20 @@ export class ApiService {
 
   constructor(private http : HttpClient) { }
 
-  get(url : string){
-    return this.http.get<any>(url);
+  get(url:string, headers? : any){
+    return this.http.get(url, headers);
   }
 
-  post(url: string, body: any, hidder? :any){
-    return this.http.post<any>(url, body, hidder)
+  post(url: string, body: any, headers? : any){
+    return this.http.post(url, body, headers);
   }
 
-  put(url : string,body: any, id : any, hidder? : any){
-    return this.http.put(`${url}/${id}`, body, hidder)
+  put(url: string , body: any, headers? : any){
+    return this.http.put(url, body, headers);
   }
 
-  delete(url: string , id : any){
-    return this.http.delete(`${url}/${id}`)
+  delete(url: string , id : number, headers? : any){
+    return this.http.delete(`${url}/${id}`, headers);
   }
+
 }
