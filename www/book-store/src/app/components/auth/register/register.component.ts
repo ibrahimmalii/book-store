@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 import { SocialAuthService, SocialUser } from "angularx-social-login";
-import { GoogleLoginProvider , FacebookLoginProvider } from "angularx-social-login";
+import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
 
 
 @Component({
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   user: SocialUser = new SocialUser();
   GoogleLoginProvider = GoogleLoginProvider;
   loggedIn: boolean = false;
-  responseChecked : any;
+  responseChecked: any;
 
   ngOnInit(): void {
 
@@ -43,11 +43,25 @@ export class RegisterComponent implements OnInit {
       this.user = user;
 
       //check email
-      this.userService.oAuthSignup(this.user).subscribe(response=>{
+      this.userService.oAuthSignup(this.user).subscribe(response => {
         this.responseChecked = response;
         console.log(response)
+        if (this.responseChecked.token) {
+          localStorage.token = this.responseChecked.token;
+          localStorage.user = JSON.stringify(this.responseChecked.user);
+          this.userService.setLoggedStatus(true);
+          this.router.navigateByUrl('/');
+          this.isLoginSuccess = true;
+          this.isLoginError = false;
+        } else {
+          this.isLoginError = true;
+          this.isLoginSuccess = false;
+        }
 
-      }, console.error)//End Of Check Email
+      }, error => {
+        this.isLoginError = true;
+        this.isLoginSuccess = false;
+      })//End Of Check Email
 
     });
 
@@ -77,14 +91,14 @@ export class RegisterComponent implements OnInit {
       this.userService.register(this.form.value).subscribe(res => {
         this.regesterData = res;
 
-        if(this.regesterData.token){
+        if (this.regesterData.token) {
           localStorage.token = this.regesterData.token;
           localStorage.user = JSON.stringify(this.regesterData.user);
           this.userService.setLoggedStatus(true);
           this.router.navigateByUrl('/');
           this.isLoginSuccess = true;
           this.isLoginError = false;
-        }else{
+        } else {
           this.isLoginError = true;
           this.isLoginSuccess = false;
         }
@@ -104,7 +118,7 @@ export class RegisterComponent implements OnInit {
 
 
   // OAuth functions
-  username : string = '';
+  username: string = '';
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
