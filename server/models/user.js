@@ -110,7 +110,7 @@ userSchema.statics.checkExist = async function(email){
             return true
         }
     } catch (e){
-        res.status(500).json()
+        throw Error(`Can't create user`)
     }
     
 }
