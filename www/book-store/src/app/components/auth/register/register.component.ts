@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+
+import { SocialAuthService, SocialUser } from "angularx-social-login";
+import { GoogleLoginProvider , FacebookLoginProvider } from "angularx-social-login";
 
 
 @Component({
@@ -12,7 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router, private userService: UserService) { }
+  constructor(private authService: SocialAuthService, private formBuilder: FormBuilder, private router: Router, private userService: UserService) { }
 
   form: FormGroup = new FormGroup({});
   isLogged: Boolean = false;
@@ -27,7 +29,30 @@ export class RegisterComponent implements OnInit {
   isPersonalDataLoaded: boolean = false;
   regesterData: any;
 
+  // Variables for OAuth
+  user: SocialUser = new SocialUser();
+  GoogleLoginProvider = GoogleLoginProvider;
+  loggedIn: boolean = false;
+  responseChecked : any;
+
   ngOnInit(): void {
+
+    // About AOuth
+    this.authService.authState.subscribe(user => {
+      this.loggedIn = (user != null);
+      this.user = user;
+
+      //check email
+      this.userService.oAuthSignup(this.user).subscribe(response=>{
+        this.responseChecked = response;
+        console.log(response)
+
+      }, console.error)//End Of Check Email
+
+    });
+
+
+
     // Check If User Logged Or Not
     this.userService.isLogged() && this.router.navigateByUrl('/');
 
@@ -75,6 +100,26 @@ export class RegisterComponent implements OnInit {
   hide() {
     this.isLoginSuccess = false;
     this.isLoginError = false;
+  }
+
+
+  // OAuth functions
+  username : string = '';
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFB(): void {
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
+
+  signOut(): void {
+    this.authService.signOut();
+  }
+
+  refreshGoogleToken(): void {
+    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
   }
 
 }

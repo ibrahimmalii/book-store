@@ -10,6 +10,7 @@ export class UserService {
 
   loginUrl = 'http://localhost:8080/api/auth/login';
   registerUrl = 'http://localhost:8080/api/auth/register';
+  OAuthUrl = 'http://localhost:8080/api/auth/oauthsignup';
 
   loggedStatus =new BehaviorSubject<boolean>(false);
   constructor(private apiService : ApiService) {
@@ -48,5 +49,9 @@ export class UserService {
 
   getToken(){
     return `Bearer ${localStorage.token}`;
+  }
+
+  oAuthSignup(body: any){
+    return this.apiService.post(this.OAuthUrl, body);
   }
 }

@@ -1,4 +1,4 @@
-<div id="parent"class='pt-5'>
+<div id="parent" class='pt-5'>
   <!-- alert for update data successfully -->
   <div *ngIf="isLoginSuccess" class="alert alert-info alert-dismissible fade show" role="alert">
     <strong>Good Work</strong> Now you logged successfully
@@ -38,4 +38,11 @@
     </div>
     <button type="submit" (click)='login()' class="btn btn-secondary text-warning mt-5 w-75">Submit</button><br>
 </form>
+
+<!-- New To Patreon -->
+<div class="new-patreon text-center">
+  <p class="h6 text-light">Don't have an account?  <a routerLink="/auth/register">Sign Up</a></p>
 </div>
+
+</div>
+

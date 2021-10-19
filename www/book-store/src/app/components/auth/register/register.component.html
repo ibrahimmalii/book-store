@@ -1,3 +1,5 @@
+<div class="mainWrapper">
+
 <app-header></app-header>
 
 <div class="container my-5">
@@ -18,7 +20,7 @@
     </div>
   </div>
   <div class="title text-center mb-1">
-    <p class="h3">Sign up</p>
+    <p class="h3 text-light">Sign up</p>
   </div>
 
   <!-- Start SignUp Form -->
@@ -26,7 +28,7 @@
     <div class="col col-lg-6 offset-lg-3">
       <form class="p-4" action="#" [formGroup]="form">
         <div class="fullName-container mb-1" >
-          <label class="fw-bold" for="full_name">Full Name</label>
+          <label class="fw-bold text-light" for="full_name">Full Name</label>
           <input class="form-control" type="text" name="name" formControlName="name">
           <div *ngIf="form.controls.name.invalid && isLogged || (form.controls.name.dirty || form.controls.name.touched)">
             <small class="text-danger fw-bold mb-1 " *ngIf="form.controls.name.hasError( 'required') ">Name is required</small>
@@ -34,7 +36,7 @@
           </div>
         </div>
         <div class="email-container mb-1">
-          <label class="fw-bold" for="email">Email</label>
+          <label class="fw-bold text-light" for="email">Email</label>
           <input class="form-control" type="email" name="email" formControlName="email">
           <div *ngIf="form.controls.email.invalid && isLogged || (form.controls.email.dirty || form.controls.email.touched)">
             <small class="text-danger fw-bold mb-1 " *ngIf="form.controls.email.hasError( 'required') ">Email is required</small>
@@ -43,7 +45,7 @@
           </div>
         </div>
         <div class="email-container mb-1">
-          <label class="fw-bold" for="phone">Phone</label>
+          <label class="fw-bold text-light" for="phone">Phone</label>
           <input class="form-control" type="phone" name="phone" formControlName="phone">
           <div *ngIf="form.controls.phone.invalid && isLogged || (form.controls.phone.dirty || form.controls.phone.touched)">
             <small class="text-danger fw-bold mb-1 " *ngIf="form.controls.phone.hasError( 'required') ">phone is required</small>
@@ -51,7 +53,7 @@
           </div>
         </div>
         <div class="email-container mb-1">
-          <label class="fw-bold" for="address">address</label>
+          <label class="fw-bold text-light" for="address">address</label>
           <input class="form-control" type="address" name="address" formControlName="address">
           <div *ngIf="form.controls.address.invalid && isLogged || (form.controls.address.dirty || form.controls.address.touched)">
             <small class="text-danger fw-bold mb-1 " *ngIf="form.controls.address.hasError( 'required') ">address is required</small>
@@ -59,7 +61,7 @@
           </div>
         </div>
         <div class="password-container mb-1" >
-          <label class="fw-bold" for="password">Password</label>
+          <label class="fw-bold text-light" for="password">Password</label>
           <input class="form-control" #passwordValue type="password" name="password" formControlName="password">
           <div *ngIf="form.controls.password.invalid && isLogged || (form.controls.password.dirty || form.controls.password.touched)">
             <small class="text-danger fw-bold mb-1 " *ngIf="form.controls.password.hasError( 'required') ">Password is required</small>
@@ -68,7 +70,7 @@
           </div>
         </div>
         <div class="password-container mb-5">
-          <label class="fw-bold" for="password_confirmation">Password confirmation</label>
+          <label class="fw-bold text-light" for="password_confirmation">Password confirmation</label>
           <input class="form-control" #passwordConfirmValue type="password" name="password_confirmation" formControlName="password_confirmation">
           <div *ngIf="form.controls.password_confirmation.invalid && isLogged || (form.controls.password_confirmation.dirty || form.controls.password_confirmation.touched)">
             <small class="text-danger fw-bold mb-1 " *ngIf="form.controls.password_confirmation.hasError( 'required') ">password confirmation is required</small>
@@ -84,8 +86,8 @@
         <input type="button" value="Sign UP" [ngClass]="{'bg-success text-light': (passwordValue.value === passwordConfirmValue.value) && form.valid}" class="form-control" (click)="register()">
         <div class="social-links text-center my-3">
           <p class="h6 mb-1">or</p>
-          <button class="btn form-control mb-2"><i class="fa fa-facebook"></i>Signup With Google</button>
-          <button class="btn form-control mb-2"><i class="fa fa-facebook"></i>Signup With Facebook</button>
+          <button class="btn form-control mb-2" (click)="signInWithGoogle()"> Signup With Google<i class="fa fa-google fw-bold fs-5 text-danger"></i></button>
+          <button class="btn form-control mb-2" (click)="signInWithFB()">Signup With Facebook<i class="fa fa-facebook fw-bold fs-5 text-primary"></i></button>
         </div>
       </form>
     </div>
@@ -99,3 +101,4 @@
 </div>
 
 <app-footer></app-footer>
+</div>
