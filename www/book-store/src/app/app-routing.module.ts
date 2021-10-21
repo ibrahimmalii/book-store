@@ -1,6 +1,7 @@
 import { HomeComponent } from './components/main-page/home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CardComponent } from './components/card/card.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
   },{
     path: '',
     loadChildren: () => import('./components/main-page/main-page.module').then(m => m.MainPageModule)
-  }
+  },
+  {path: 'orders/pay' , component: CardComponent}
 ];
 
 @NgModule({
