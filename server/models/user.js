@@ -34,7 +34,6 @@ const userSchema = new Schema({
     },
     phone: {
         type: String,
-        required: true,
         validate(value) {
             if (!value.toLowerCase().match()) {
                 throw Error('Phone number not valid')
@@ -43,18 +42,8 @@ const userSchema = new Schema({
     },
     address: {
         type: String,
-        required: true,
         trim: true,
         lowercase: true
-    },
-    age: {
-        type: Number,
-        required: true,
-        validate(value) {
-            if (value < 0) {
-                throw Error('Age not valid')
-            }
-        }
     },
     isAdmin: {
         type: Boolean,
@@ -100,8 +89,30 @@ userSchema.methods.toJSON = function ()  {
 
     delete userObject.password
     delete userObject.tokens
+    delete userObject._id
 
     return userObject
+}
+
+userSchema.methods.generateRandomPassword = async function(length = 8){
+        const randomPass = Math.random().toString(16).substr(2, length);
+        const hashedPass = await bcrypt.hash(randomPass, 8)
+
+        return hashedPass
+}
+
+userSchema.statics.checkExist = async function(email){
+    try{
+        const user = await User.findOne({email})
+        if(!user){
+            return false
+        }else{
+            return true
+        }
+    } catch (e){
+        throw Error(`Can't create user`)
+    }
+    
 }
 
 // 1- generate token ==> methods access instance

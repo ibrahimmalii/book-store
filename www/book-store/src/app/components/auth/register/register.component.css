@@ -1,0 +1,62 @@
+.mainWrapper{
+  background-image: url('https://th.bing.com/th/id/R.49b35731ffb393c8a38ddb4e7002dc78?rik=RCH2tSTsOPjrwA&pid=ImgRaw&r=0');
+}
+
+form{
+  border: 1px solid var(--fc);
+  border-radius: 8px;
+  background-color: #654530;
+  opacity: .9;
+}
+
+input +button{
+  display: block;
+  /* background-color: var(--bg); */
+  background-color: green;
+}
+
+input[type="button"]{
+  background-color: var(--bg)
+}
+
+button, input[type="button"]{
+  border: 1px solid rgb(241, 172, 172);
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+
+
+button:hover{
+  background-color: var(--bg);
+}
+
+.form-control{
+  padding : 10px
+}
+
+a{
+  color: var(--tc);
+  text-decoration: none;
+}
+
+a:hover{
+  text-decoration: underline;
+  color: rgb(17, 13, 226);
+}
+
+
+.validData{
+  background-color: red;
+  font-weight: bold;
+}
+
+
+i{
+  margin-left: 20px;
+}
+
+
+.fa-google{
+  margin-left: 38px;
+}
