@@ -10,6 +10,17 @@ const cors = require('cors')
 dotenv.config()
 const port = process.env.port || 8080;
 
+//********  About files upload *********/
+const multer = require('multer')
+const upload = multer({
+    dest: 'images'
+})
+
+// app.post('/upload', upload.single('upload'), (req,res)=>{
+//     res.send()
+// })
+
+
 //============================================== import routes =================================//
 const authRouter = require('./routes/auth')
 const userRoute = require('./routes/user')

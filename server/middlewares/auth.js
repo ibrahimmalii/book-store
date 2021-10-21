@@ -23,7 +23,4 @@ const verifyTokenAndAuthorization = (req, res, next) => {
     (req.user.id == req.params.id || user.isAdmin) ? next() : res.statis.json('You are not allowed to do that..')
 }
 
-module.exports = {
-    auth, 
-    verifyTokenAndAuthorization
-}
+module.exports = auth

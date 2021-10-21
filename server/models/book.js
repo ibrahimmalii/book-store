@@ -23,17 +23,9 @@ const bookSchema = new Schema({
         lowercase: true,
         min: [10, 'Minimum length is 10 characters']
     },
-    img_source: {
+    avatar: {
         file: {
             type: Buffer,
-            required: true
-        },
-        name: {
-            type: String,
-            required: true
-        },
-        mimetype: {
-            type: String,
             required: true
         }
     },
@@ -54,12 +46,6 @@ const bookSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'Department'
-        }
-    }],
-    owners: [{
-        owner: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
         }
     }],
     comments: [{

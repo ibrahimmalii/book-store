@@ -1,12 +1,27 @@
 const express = require('express')
 const router = express.Router()
-const {auth, verifyTokenAndAuthorization} = require('../middlewares/auth')
+const multer = require('multer')
+const sharp = require('sharp')
+const auth = require('../middlewares/auth')
 const Book = require('../models/book')
 
 
-router.post('/', auth, async(req, res)=>{
-    const {_id} = req.user
-    const book = new Book({...req.body, 'owners.owner': _id})
+const upload= multer({
+    limits: {
+        fileSize: 3000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            return cb(new Error('Please upload only image'))
+        }
+        cb(undefined, true)
+    }
+})
+
+router.post('/', auth, upload.single('avatar'), async(req, res)=>{
+    const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer()
+    const book = new Book(req.body)
+    book.avatar = buffer
     try{
         await book.save()
         
