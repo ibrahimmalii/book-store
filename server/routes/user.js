@@ -71,7 +71,7 @@ router.get('/me', auth, async (req, res) => {
     res.json(req.user)
 })
 
-router.get('', auth, async (req, res) => {
+router.get('', async (req, res) => {
     try {
         const users = await User.find()
         res.status(200).json(users)

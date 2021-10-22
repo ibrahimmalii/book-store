@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const departmentSchema = new Schema({
+const categorySchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -12,12 +12,12 @@ const departmentSchema = new Schema({
 })
 
 // Set relations between this and books
-departmentSchema.virtual('books', {
+categorySchema.virtual('books', {
     ref: 'Book',
     localField: '_id',
     foreignField: 'departments'
 })
 
-const Department = mongoose.model('Department', departmentSchema)
+const Category = mongoose.model('Category', categorySchema)
 
-module.exports = Department
+module.exports = Category

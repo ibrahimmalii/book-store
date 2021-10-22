@@ -19,9 +19,12 @@ const upload = multer({
 
 
 router.post('/register', upload.single('avatar') ,async (req, res) => {
-    const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer()
     const user = new User(req.body)
-    user.avatar = buffer
+    if(req.file){
+        const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer()
+        user.avatar = buffer
+    }
+    
     try {
         await user.save()
         const token = await user.generateAuthToken()

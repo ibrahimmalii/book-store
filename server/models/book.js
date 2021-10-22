@@ -18,16 +18,13 @@ const bookSchema = new Schema({
     },
     description: {
         type: String,
-        required: true,
+        // required: true,
         trim: true,
         lowercase: true,
         min: [10, 'Minimum length is 10 characters']
     },
     avatar: {
-        file: {
-            type: Buffer,
-            required: true
-        }
+        type: Buffer,
     },
     amount: {
         type: Number,
@@ -41,13 +38,11 @@ const bookSchema = new Schema({
         type: Number,
         default: 0
     },
-    departments: [{
-        department: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: 'Department'
-        }
-    }],
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Category'
+    },
     comments: [{
         comment: {
             type: mongoose.Schema.Types.ObjectId,
@@ -58,7 +53,7 @@ const bookSchema = new Schema({
             ref: 'Comment'
         }
     }]
-},{
+}, {
     timestamps: true
 })
 

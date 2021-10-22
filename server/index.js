@@ -25,6 +25,7 @@ const upload = multer({
 const authRouter = require('./routes/auth')
 const userRoute = require('./routes/user')
 const bookRoute = require('./routes/book')
+const categoryRouter = require('./routes/category')
 
 
 
@@ -37,6 +38,7 @@ app.use(bodyParser())
 app.use('/api/auth', authRouter)
 app.use('/api/users', userRoute)
 app.use('/api/books', bookRoute)
+app.use('/api/categories', categoryRouter)
 
 
 

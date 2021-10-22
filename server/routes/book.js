@@ -6,28 +6,32 @@ const auth = require('../middlewares/auth')
 const Book = require('../models/book')
 
 
-const upload= multer({
+const upload = multer({
     limits: {
-        fileSize: 3000000
+        fileSize: 3000000 // 3 MG
     },
     fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
             return cb(new Error('Please upload only image'))
         }
         cb(undefined, true)
     }
 })
 
-router.post('/', auth, upload.single('avatar'), async(req, res)=>{
-    const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer()
+
+router.post('/', upload.single('avatar'), async(req, res)=>{
     const book = new Book(req.body)
-    book.avatar = buffer
+    if(req.file){
+        const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer()
+        book.avatar = buffer
+    }
+
     try{
         await book.save()
         
         res.status(201).json(book)
     } catch (e) {
-        res.status(500).json()
+        res.status(500).json(e)
     }
 })
 
