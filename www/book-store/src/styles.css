@@ -12,3 +12,6 @@
   --h5 : #FFFB1A;
   --text: #868096;
 }
+*{
+  direction: rtl;
+}
