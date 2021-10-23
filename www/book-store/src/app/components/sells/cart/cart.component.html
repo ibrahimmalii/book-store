@@ -1,0 +1,42 @@
+<h2 class="text-center mt-3">BASKET</h2>
+<table class="text-center w-100 container mt-5">
+    <tr class="header">
+        <th>البضائع</th>
+        <th>السعر</th>
+        <th>الكميه</th>
+        <th>الاجمالي</th>
+    </tr>
+    <tr>
+        <!-- <tr *ngFor="let item of list" let currentIndex = index> -->
+        <!-- <td>{{currentIndex + 1}}</td> -->
+        <td class="text-success font-weight-bold" style="font-size: 20px;">{{images}}</td>
+        <td class="text-success font-weight-bold"  style="font-size: 20px;">{{price}}</td>
+        <td class="text-success font-weight-bold" style="font-size: 20px;"><input
+                type="number" step="1" min="0" max="33" (change)='getQuantity(inputQuantity.value)' value="1" #inputQuantity></td>
+        <td class="text-success font-weight-bold" style="font-size: 20px;">{{total}}</td>
+    </tr>
+</table>
+
+
+<div class="card m-auto mt-5 w-50 p-3" style="background-color:rgb(55, 99, 6)">
+    <h3 class="text-light">اجمالي سله المشتريات</h3>
+    <div class="card-body">
+        <table class="w-100 text-light">
+            <tr>
+                <td>المجموع</td>
+                <td>95687</td>
+            </tr>
+            <tr>
+                <td>الشحن</td>
+                <td>20$</td>
+            </tr>
+            <tr>
+                <td>الأجمالي</td>
+                <td>95687</td>
+            </tr>
+        </table>
+    </div>
+    <div class="card-footer text-center">
+        <a routerLink="/sells/information" class="btn btn-success w-50">التقدم لأتمام الطلب</a>
+    </div>
+</div>
