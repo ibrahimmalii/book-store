@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './components/shared/shared.module';
+import { CardComponent } from './components/card/card.component';
 
 //start of import social login modules
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
@@ -14,6 +15,7 @@ import {GoogleLoginProvider , FacebookLoginProvider} from 'angularx-social-login
 @NgModule({
   declarations: [
     AppComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,
