@@ -9,7 +9,7 @@ const upload = multer({
         fileSize: 3000000 // 3 MG
     },
     fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
             return cb(new Error('Please upload only image'))
         }
         cb(undefined, true)
@@ -57,8 +57,8 @@ router.get('/me/:id/avatar', async(req, res)=>{
 
 // Carts page
 router.get('/me/books', auth, async (req, res) => {
-    const { id } = req.user
     try {
+        const { id } = req.user
         const user = await User.findById(id)
         await user.populate('books')
         res.json(user.books)

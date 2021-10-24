@@ -15,7 +15,7 @@ const categorySchema = new Schema({
 categorySchema.virtual('books', {
     ref: 'Book',
     localField: '_id',
-    foreignField: 'departments'
+    foreignField: 'category'
 })
 
 const Category = mongoose.model('Category', categorySchema)

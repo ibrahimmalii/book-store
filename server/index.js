@@ -43,4 +43,4 @@ app.use('/api/categories', categoryRouter)
 
 
 //=============================================== Connect To Server ===========================//
-app.listen(port, ()=>console.log(chalk.bold.green('Server is up on Port', port)));
+app.listen(port, ()=>console.log(chalk.bold.green.inverse('Server is up on Port', port)));
