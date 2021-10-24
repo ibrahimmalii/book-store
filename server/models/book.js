@@ -41,7 +41,7 @@ const bookSchema = new Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Category'
+        ref: 'Category',
     },
     comments: [{
         comment: {
@@ -65,7 +65,6 @@ bookSchema.methods.toJSON = function ()  {
     const bookObject = book.toObject()
 
     delete bookObject.avatar
-
     return bookObject
 }
 
