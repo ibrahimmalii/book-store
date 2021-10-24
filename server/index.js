@@ -29,7 +29,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/users', userRoute)
 app.use('/api/books', bookRoute)
 app.use('/api/categories', categoryRouter)
-app.use('/payment', stripeRouter)
+app.use('/api/payment', stripeRouter)
 
 
 

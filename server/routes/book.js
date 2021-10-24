@@ -35,6 +35,7 @@ router.post('/', upload.single('avatar'), async (req, res) => {
     }
 })
 
+
 router.get('/me', auth, async (req, res) => {
     const { _id } = req.user
     try {
@@ -42,6 +43,20 @@ router.get('/me', auth, async (req, res) => {
         res.json(books)
     } catch (e) {
         res.status(500).json()
+    }
+})
+
+// Get Books Image
+router.get('/:id/avatar', async(req, res)=>{
+    try{
+        const book = await Book.findById(req.params.id)
+        if(!book || !book.avatar){
+            throw new Error()
+        }
+        res.set('Content-Type', 'image/jpg')
+        res.send(book.avatar)
+    }catch(e){
+        res.status(404).send()
     }
 })
 
@@ -77,10 +92,10 @@ router.get('/:id', auth, async (req, res) => {
 //     }
 // })
 
-router.get('', auth, async (req, res) => {
+router.get('',  async (req, res) => {
     try {
         // To Ignore Avatar 
-        const books = await Book.find({}, { avatar: 0 })
+        const books = await Book.find({}, { avatar: 0 }).limit(20)
         res.json(books)
     } catch (e) {
         res.status(500).json()
