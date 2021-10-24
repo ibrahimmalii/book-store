@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-payment',
@@ -7,44 +9,65 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private apiService: ApiService) { }
+
+  stripeResponse: any;
+  beforeClick:boolean = false
 
   ngOnInit(): void {
     this.loadStripe();
   }
 
   loadStripe() {
-     
-    if(!window.document.getElementById('stripe-script')) {
-      var s = window.document.createElement("script");
+
+    if (!window.document.getElementById('stripe-script')) {
+      let s = window.document.createElement("script");
       s.id = "stripe-script";
       s.type = "text/javascript";
       s.src = "https://checkout.stripe.com/checkout.js";
       window.document.body.appendChild(s);
     }
+
   }
 
 
-  pay(amount:any) {    
- 
+  pay(amount: any) {
+    this.beforeClick = true
     var handler = (<any>window).StripeCheckout.configure({
-      key: 'pk_test_aeUUjYYcx4XNfKVW60pmHTtI',
+      key: 'pk_test_51JoBiBCT1XfYCoGciYEW3opcauXtFS0o6j4WSRvNXs4DwobozRK3YpE4wup170Mn1yNp7MXOaaF2acP04YTti0wa00666D4MmT',
       locale: 'auto',
-      token: function (token: any) {
-        // You can access the token ID with `token.id`.
-        // Get the token ID to your server-side code for use.
-        console.log(token)
-        alert('Token Created!!');
+      token: async (token: any) => {
+        try {
+          this.apiService.post('http://localhost:8080/api/payment',
+            { tokenId: token.id, amount: 70 }
+          ).subscribe((response: any) => {
+            console.log(response)
+            this.stripeResponse = response
+            if (this.stripeResponse.id) {
+              this.router.navigateByUrl('/sells/success')
+            } else {
+              alert('sorry you donnot have enough charge');
+              this.router.navigateByUrl('/')
+            }
+          }, error => {
+            alert('sorry you donnot have enough charge');
+            this.router.navigateByUrl('/')
+          })
+          // console.log(token)
+        } catch (e) {
+          console.log(e)
+        }
       }
+
     });
- 
-    
+
+
     handler.open({
       name: 'معلومات البطاقه',
       description: '',
       amount: amount * 100
     });
- 
+
   }
 
 }

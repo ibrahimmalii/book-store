@@ -1,3 +1,4 @@
+import { ApiService } from './../../../services/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private apiService: ApiService) { }
 
   users: any;
   books: any;
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit {
 
     const token = localStorage.token
 
-    this.http.get('http://localhost:8080/api/books',
+    this.apiService.get('http://localhost:8080/api/books',
       { headers: { 'Authorization': `Bearer ${token}` } })
       .subscribe(res => {
         console.log(res)

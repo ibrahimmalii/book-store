@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { BookDetailsComponent } from './book-details/book-details.component';
 
 
 
@@ -10,13 +11,14 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   declarations: [
     HeaderComponent,
     FooterComponent,
-    SidebarComponent
+    SidebarComponent,
+    BookDetailsComponent
   ],
   imports: [
     CommonModule
   ],
   exports :[
-    HeaderComponent, FooterComponent, SidebarComponent
+    HeaderComponent, FooterComponent, SidebarComponent, BookDetailsComponent
   ]
 })
 export class SharedModule { }
