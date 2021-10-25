@@ -5,7 +5,7 @@
 form{
   border: 1px solid var(--fc);
   border-radius: 8px;
-  background-color: #654530;
+  background-color: var(--mc);
   opacity: .9;
 }
 
