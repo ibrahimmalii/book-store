@@ -19,7 +19,7 @@
 <!-- Start Login From -->
 <form [formGroup]="form" class="mt-5">
     <div class="mb-3">
-      <label for="exampleInputemail1" class="form-label mt-5 text-warning">email address</label>
+      <label for="exampleInputemail1" class="form-label text-light">email address</label>
       <input type="email" class="form-control" name='email' formControlName="email">
 
     <div *ngIf="form.controls.email.invalid && isLogged || (form.controls.email.dirty || form.controls.email.touched)">
@@ -28,7 +28,7 @@
     </div>
     </div>
     <div class="mb-3">
-      <label for="exampleInputpassword1" class="form-label mt-4 text-warning">password</label>
+      <label for="exampleInputpassword1" class="form-label text-light">password</label>
       <input type="password" class="form-control" formControlName='password'>
      <div *ngIf="form.controls.password.invalid && isLogged || (form.controls.password.dirty || form.controls.password.touched)">
         <small class="text-danger fw-bold mb-3 " *ngIf="form.controls.password.hasError( 'required') ">password is required</small>
@@ -36,12 +36,14 @@
         <small class="text-danger fw-bold mb-3 " *ngIf="form.controls.password.hasError( 'maxlength') ">You have to write less than 15 characters</small>
      </div>
     </div>
-    <button type="submit" (click)='login()' class="btn btn-secondary text-warning mt-5 w-75">Submit</button><br>
+    <div class="submit text-center mt-2 pt-2">
+      <button type="submit" (click)='login()' [ngClass]="{'bg-success text-light' : form.valid}" class="btn text-light fw-bold  w-75">Submit</button><br>
+    </div>
 </form>
 
-<!-- New To Patreon -->
+<!-- Register Link -->
 <div class="new-patreon text-center">
-  <p class="h6 text-light mt-5">Don't have an account?  <a routerLink="/auth/register">Sign Up</a></p>
+  <p class="h6 text-light">Don't have an account?  <a routerLink="/auth/register">Sign Up</a></p>
 </div>
 
 </div>
