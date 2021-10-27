@@ -9,8 +9,8 @@ router.post('/pay', (req, res) => {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": "http://localhost:8080/success",
-            "cancel_url": "http://localhost:8080/cancel"
+            "return_url": "http://localhost:4200/sells/success",
+            "cancel_url": "http://localhost:4200/sells/cancel"
         },
         "transactions": [{
             "item_list": {
