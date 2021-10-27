@@ -10,6 +10,7 @@ import { CardComponent } from './components/card/card.component';
 //start of import social login modules
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {GoogleLoginProvider , FacebookLoginProvider} from 'angularx-social-login';
+import { AngularRaveModule } from 'angular-rave';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {GoogleLoginProvider , FacebookLoginProvider} from 'angularx-social-login
     SharedModule,
     AppRoutingModule,
     HttpClientModule,
-    SocialLoginModule
+    SocialLoginModule,
+    AngularRaveModule
   ],
   providers: [
     {

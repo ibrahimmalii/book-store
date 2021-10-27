@@ -9,12 +9,13 @@ export class CardComponent implements OnInit {
 
   constructor() { }
 
+
   ngOnInit(): void {
     this.loadStripe();
   }
 
   loadStripe() {
-     
+
     if(!window.document.getElementById('stripe-script')) {
       var s = window.document.createElement("script");
       s.id = "stripe-script";
@@ -25,8 +26,8 @@ export class CardComponent implements OnInit {
   }
 
 
-  pay(amount:any) {    
- 
+  pay(amount:any) {
+
     var handler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_aeUUjYYcx4XNfKVW60pmHTtI',
       locale: 'auto',
@@ -37,12 +38,12 @@ export class CardComponent implements OnInit {
         alert('Token Created!!');
       }
     });
- 
+
     handler.open({
       name: 'Demo Site',
       description: '2 widgets',
       amount: amount * 100
     });
- 
+
   }
 }

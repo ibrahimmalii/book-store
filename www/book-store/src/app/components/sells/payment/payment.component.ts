@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -9,14 +10,21 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class PaymentComponent implements OnInit {
 
-  constructor(private router: Router, private apiService: ApiService) { }
+  constructor(private router: Router, private apiService: ApiService, private http: HttpClient) { }
 
   stripeResponse: any;
-  beforeClick:boolean = false
+  beforeClick: boolean = false
 
   ngOnInit(): void {
     this.loadStripe();
   }
+
+
+  // ************* paypal ***********//
+  paypal(){
+    location.assign('http://localhost:8080')
+  }
+
 
   loadStripe() {
 
