@@ -4,6 +4,7 @@ const multer = require('multer')
 const sharp = require('sharp')
 const auth = require('../middlewares/auth')
 const Book = require('../models/book')
+const User = require('../models/user')
 
 
 const upload = multer({
@@ -68,10 +69,35 @@ router.get('/:id', auth, async (req, res) => {
         if (!book) {
             return res.status(400).json('No books found')
         }
-        res.json(book)
+
+        let owners = []
+        book.comments.forEach(async(comment)=>{
+            let user = await User.findOne({_id: comment.ownerId},{avatar: 0})
+            comment.ownerId = {email: user.email, name: user.name}
+            console.log(comment)
+        })
+        // console.log(owners)
+        res.json({data: book, comments:book.comments})
     } catch (e) {
         res.status(500).json()
     }
+})
+
+// Edit in books 
+router.put('/update/:id', auth, async (req, res)=>{
+    const {id} = req.params
+    const {comment} = req.body
+    console.log(comment)
+    try{
+        const book = await Book.findOne({ _id : id}, { avatar: 0})
+        // book.comments.push(comment)
+        // book.save()
+        console.log(book)
+        res.send(book)
+    } catch (e) {
+
+    }
+
 })
 
 
@@ -91,6 +117,8 @@ router.get('/:id', auth, async (req, res) => {
 //         res.status(500).json()
 //     }
 // })
+
+
 
 router.get('',  async (req, res) => {
     try {
