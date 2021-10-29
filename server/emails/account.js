@@ -1,6 +1,6 @@
 const sgMail = require('@sendgrid/mail')
 
-const sendGridApiKey = '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'
+const sendGridApiKey ='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'
 
 sgMail.setApiKey(sendGridApiKey)
 
@@ -12,5 +12,5 @@ try{
         text: 'I hope this one actually to you'
     }).then(console.log).catch(console.error)
 } catch (e){
-    cosnsole.log(e)
-}
+    cosnsole.log(e.message)
+} 
