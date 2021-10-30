@@ -10,6 +10,8 @@ import { CardComponent } from './components/card/card.component';
 //start of import social login modules
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {GoogleLoginProvider , FacebookLoginProvider} from 'angularx-social-login';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -23,7 +25,13 @@ import {GoogleLoginProvider , FacebookLoginProvider} from 'angularx-social-login
     SharedModule,
     AppRoutingModule,
     HttpClientModule,
-    SocialLoginModule
+    SocialLoginModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     {
