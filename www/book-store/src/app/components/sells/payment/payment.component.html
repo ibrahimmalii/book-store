@@ -1,9 +1,40 @@
-<div class="container mt-5 text-center">
-    <h2>ORDER OVERVIEW</h2>
-    <div class="mt-5 text-center">
-        <button (click)="pay(20)" class="btn btn-success btn-block w-50 ">Pay $20</button>
+
+<div class="container pt-5" *ngIf="!beforeClick">
+
+  <div class="app_conatiner m-auto">
+    <div class="top-box">
+        <p><span class="left-icon">&#x2190;</span> CHECKOUT<span class="right-icon">&#xb7;&#xb7;&#xb7;</span></p>
+      </div>
+      <div class="middle-box">
+        <h1>1599 <span>$</span> </h1>
+        <p>Pay To Bhavik Company Ltd</p>
+      </div>
+
+      <div class="bottom-box text-center">
+        <button type="button" (click)="pay(10)" class="payment-option-btn">Pay With Stripe</button>
+        <button type="submit" (click)="paypal()" class="payment-option-btn">Pay With Paypal</button>
+        <div class="card-details">
+          <p>Pay using credit or debit card</p>
+          <div class="card-num-field-group">
+            <label >Card Number</label>
+            <input type="text" class="card-num-field" placeholder="xxxx-xxxx-xxxx-xxxx">
+          </div>
+          <div class="name-field-group">
+            <label >Card Holder Name</label><br>
+            <input type="text" class="name-field" placeholder="Full Name">
+          </div>
+          <div>
+            <button type="button" class="pay-btn">Pay Now</button>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <!-- <p class="mt-5">
-        Try it out using the test card number <b>4242 4242 4242 4242</b>, a random three-digit CVC number, any expiration date in the future, and a random five-digit U.S. ZIP code.
-    </p> -->
-</div>
+
+  </div>
+
+  <div class="container pt-5" *ngIf="beforeClick">
+    <div class="text-center pt-5">
+      <h1 class="text-success">Processin. Please Wait.....</h1>
+    </div>
+  </div>

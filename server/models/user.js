@@ -45,10 +45,19 @@ const userSchema = new Schema({
         trim: true,
         lowercase: true
     },
+    avatar: {
+        type: Buffer
+    },
     isAdmin: {
         type: Boolean,
         default: false
     },
+    orders: [{
+        order: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Order'
+        }
+    }],
     favourite: [{
         book: {
             type: mongoose.Schema.Types.ObjectId,
@@ -89,7 +98,7 @@ userSchema.methods.toJSON = function ()  {
 
     delete userObject.password
     delete userObject.tokens
-    delete userObject._id
+    delete userObject.avatar
 
     return userObject
 }

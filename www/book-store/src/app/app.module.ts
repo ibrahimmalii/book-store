@@ -10,8 +10,7 @@ import { CardComponent } from './components/card/card.component';
 //start of import social login modules
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import {GoogleLoginProvider , FacebookLoginProvider} from 'angularx-social-login';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+// import { AngularRaveModule } from 'angular-rave';
 
 
 @NgModule({
@@ -20,18 +19,13 @@ import { environment } from '../environments/environment';
     CardComponent,
   ],
   imports: [
-    BrowserModule,
+  BrowserModule,
     AppRoutingModule,
     SharedModule,
     AppRoutingModule,
     HttpClientModule,
     SocialLoginModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    })
+    // AngularRaveModule
   ],
   providers: [
     {

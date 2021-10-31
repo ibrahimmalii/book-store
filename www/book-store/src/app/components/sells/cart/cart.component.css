@@ -1,9 +1,12 @@
+*{
+  direction:rtl
+}
 .header{
     font-size: 20px;
 }
-table ,tr , td, th{
+/* table ,tr , td, th{
     border: 1px solid rgb(55, 99, 6);
-}
+} */
 h2{
     color: white;
     text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;

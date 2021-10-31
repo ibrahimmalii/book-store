@@ -7,14 +7,16 @@ form{
     /* border: 1px solid rgb(143, 243, 143); */
     width: 40%;
     padding: 20px;
-    height: 400px;
+    /* height: 400px; */
 }
 
-.btn{
-    margin-left:60px
+button[type='submit']{
+  background-color: #654530;
 }
+
 #parent{
-    background-image: url('https://th.bing.com/th/id/R.781b2d132fc82b6d5e509cc571fe412b?rik=TcoefGhfKXePQw&riu=http%3a%2f%2fwallpapercave.com%2fwp%2fijo8KeK.jpg&ehk=z9m0gFE7blgeWNJVmAf2sW8wv0b7eG54E6lEVPWcuPA%3d&risl=&pid=ImgRaw&r=0');
+    /* background-image: url('https://th.bing.com/th/id/R.781b2d132fc82b6d5e509cc571fe412b?rik=TcoefGhfKXePQw&riu=http%3a%2f%2fwallpapercave.com%2fwp%2fijo8KeK.jpg&ehk=z9m0gFE7blgeWNJVmAf2sW8wv0b7eG54E6lEVPWcuPA%3d&risl=&pid=ImgRaw&r=0'); */
+    background-image: url('/assets/images/login.jpg');
     background-size: cover;
     /* background-repeat: no-repeat; */
     width: 100%;

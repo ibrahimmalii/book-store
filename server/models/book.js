@@ -18,24 +18,13 @@ const bookSchema = new Schema({
     },
     description: {
         type: String,
-        required: true,
+        // required: true,
         trim: true,
         lowercase: true,
         min: [10, 'Minimum length is 10 characters']
     },
-    img_source: {
-        file: {
-            type: Buffer,
-            required: true
-        },
-        name: {
-            type: String,
-            required: true
-        },
-        mimetype: {
-            type: String,
-            required: true
-        }
+    avatar: {
+        type: Buffer,
     },
     amount: {
         type: Number,
@@ -49,33 +38,32 @@ const bookSchema = new Schema({
         type: Number,
         default: 0
     },
-    departments: [{
-        department: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: 'Department'
-        }
-    }],
-    owners: [{
-        owner: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    }],
-    comments: [{
-        comment: {
-            type: mongoose.Schema.Types.ObjectId,
-            trim: true,
-            lowercase: true,
-            min: [5, 'minimum length is 4 characters'],
-            max: [500, 'maximum length is 500 character'],
-            ref: 'Comment'
-        }
-    }]
-},{
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Category',
+    }
+}, {
     timestamps: true
 })
 
 const Book = mongoose.model('Book', bookSchema)
+
+
+
+// Response some data and delete hide private data 
+bookSchema.methods.toJSON = function ()  {
+    const book = this
+    const bookObject = book.toObject()
+
+    delete bookObject.avatar
+    return bookObject
+}
+
+bookSchema.virtual('comments', {
+    ref: 'Comment',
+    localField: '_id',
+    foreignField: 'bookId'
+})
 
 module.exports = Book

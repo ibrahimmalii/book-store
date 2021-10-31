@@ -5,11 +5,13 @@ import { PaymentComponent } from './payment/payment.component';
 import { InformationComponent } from './information/information.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
 
 const routes : Routes = [
   {path: 'cart', component: CartComponent},
   {path: 'information', component: InformationComponent},
   {path: 'pay', component: PaymentComponent},
+  {path: 'success', component: PaymentSuccessComponent},
   {path: '', component: CartComponent}
 ]
 
@@ -17,7 +19,8 @@ const routes : Routes = [
   declarations: [
     CartComponent,
     PaymentComponent,
-    InformationComponent
+    InformationComponent,
+    PaymentSuccessComponent,
   ],
   imports: [
     CommonModule, RouterModule.forChild(routes),
