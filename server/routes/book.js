@@ -84,39 +84,25 @@ router.get('/:id', auth, async (req, res) => {
 })
 
 // Edit in books 
-router.put('/update/:id', auth, async (req, res)=>{
-    const {id} = req.params
-    const {comment} = req.body
-    console.log(comment)
-    try{
-        const book = await Book.findOne({ _id : id}, { avatar: 0})
-        // book.comments.push(comment)
-        // book.save()
-        console.log(book)
-        res.send(book)
-    } catch (e) {
+router.put('/update/:id', auth, async (req, res) => {
 
+    // To check if value in valid values for updates
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['title', 'author', 'description', 'rate', 'price', 'amount']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    if (!isValidOperation) {
+        return res.status(400).json({ error: 'error value for updates' })
     }
-
+    const { id } = req.params
+    const book = Book.findOne({ _id: id}, {avatar: 0})
+    try {
+        updates.forEach(update => book[update] = req.body[update])
+        await book.save()
+        res.status(200).json(book)
+    } catch (e) {
+        res.status(400).json(e)
+    }
 })
-
-
-// To Buy A New Book
-// router.put('/buy', auth, async(req, res)=>{
-//     const [booksID] = req.body
-//     const {ownerID} = req.user
-//     console.log(req.body)
-//     try{
-//         req.body.bookID.forEach(async(book)=>{
-//             const currentBook = await Book.findById(book)
-//             currentBook.owners = currentBook.owners.concat({ownerID})
-//             // console.log(currentBook)
-//             await currentBook.save()
-//         })
-//     } catch (e) {
-//         res.status(500).json()
-//     }
-// })
 
 
 
