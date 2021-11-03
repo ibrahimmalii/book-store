@@ -94,7 +94,7 @@ router.put('/update/:id', auth, async (req, res) => {
         return res.status(400).json({ error: 'error value for updates' })
     }
     const { id } = req.params
-    const book = Book.findOne({ _id: id}, {avatar: 0})
+    const book = await Book.findOne({ _id: id}, {avatar: 0})
     try {
         updates.forEach(update => book[update] = req.body[update])
         await book.save()
